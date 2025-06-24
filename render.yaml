@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: youtube-downloader-pro
+    env: python
+    buildCommand: |
+      apt-get update && apt-get install -y ffmpeg
+      pip install -r requirements.txt
+    startCommand: python server.py
+    envVars:
+      - key: PORT
+        value: 10000
+    plan: free 
