@@ -39,7 +39,7 @@ if (downloadBtn) {
         loadingStatus.textContent = 'Connecting to server...';
         progressBar.style.width = '10%';
         try {
-            const response = await fetch('/download', {
+            const response = await fetch('https://your-app.onrender.com/download', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url })

@@ -37,6 +37,8 @@ def download():
         # Extract video info to get the title (without downloading)
         with YoutubeDL({'quiet': True}) as ydl:
             info = ydl.extract_info(url, download=False)
+            if not info:
+                return jsonify({'success': False, 'error': 'Could not extract video info.'}), 400
             title = info.get('title', 'video')
             ext = info.get('ext', 'mp4')
         safe_title = sanitize_filename(title)
@@ -49,6 +51,8 @@ def download():
         # Download the video
         with YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=True)
+            if not info:
+                return jsonify({'success': False, 'error': 'Download failed.'}), 500
             ext = info.get('ext', 'mp4')
         filename = f'{safe_title}.{ext}'
         download_url = f'/downloads/{filename}'
@@ -73,5 +77,5 @@ def serve_file(filename):
     return send_from_directory(DOWNLOAD_FOLDER, filename, as_attachment=True)
 
 if __name__ == '__main__':
-    # Run the Flask development server
-    app.run(debug=True) 
+    port = int(os.environ.get('PORT', 10000))  # Use 10000 as a fallback, but Render will set PORT
+    app.run(host='0.0.0.0', port=port) 

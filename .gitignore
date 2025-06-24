@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+downloads/
+.env
+.DS_Store
+*.log
+*.sqlite3
+.sass-cache/
+node_modules/
+.idea/
+.vscode/ 
